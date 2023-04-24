@@ -10,6 +10,7 @@ class Program
         Separator,
         AfterSeparator,
         Exponent,
+        ExponentSign,
         ExponentValue
     }
 
@@ -112,9 +113,19 @@ class Program
                 case States.Exponent:
                     if (c == '+' || c == '-')
                     {
-                        state = States.ExponentValue;
+                        state = States.ExponentSign;
                     }
                     else if (char.IsDigit(c))
+                    {
+                        state = States.ExponentValue;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                    break;
+                case States.ExponentSign:
+                    if (char.IsDigit(c))
                     {
                         state = States.ExponentValue;
                     }
